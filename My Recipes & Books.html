@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Recipes & Books</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Lora:wght@400;600&display=swap">
+<style>
+:root{--bg:#F8F1F4;--surface:#FFFDFE;--ink:#3B2F3A;--muted:#6E5C6B;--line:#E6D6DF;--accent:#9A4F70;--on-accent:#FFFFFF;--hi:#CDEBDD;--hi-ink:#1F4A38;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#241C23;--surface:#2F252E;--ink:#F3E8EE;--muted:#BBA6B5;--line:#46384A;--accent:#E3A3C0;--on-accent:#2A1A24;--hi:#CDEBDD;--hi-ink:#1F4A38;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#241C23;--surface:#2F252E;--ink:#F3E8EE;--muted:#BBA6B5;--line:#46384A;--accent:#E3A3C0;--on-accent:#2A1A24;--hi:#CDEBDD;--hi-ink:#1F4A38;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background-color:var(--bg);color:var(--ink);font-family:Lora,Georgia,"Times New Roman",serif;line-height:1.6}
+main{max-width:640px;margin:0 auto;padding:28px 18px 64px}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:3rem;font-weight:700;font-style:italic;margin:0 0 4px;line-height:1.05;text-align:center}
+.sub{color:var(--muted);margin:0 0 22px;text-align:center}
+.tabs{display:flex;gap:6px;margin-bottom:18px}
+.tab{flex:1;padding:10px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-weight:600;border-radius:10px;cursor:pointer}
+.tab[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+form{background:var(--surface);border:1.5px solid var(--line);border-radius:6px;padding:18px;display:grid;gap:10px;margin-bottom:20px}
+label{font-size:.9rem;font-weight:600;display:grid;gap:4px}
+input,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+textarea{resize:vertical;min-height:60px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.add{background:var(--accent);color:var(--on-accent);border:0;border-radius:10px;padding:11px;font:inherit;font-weight:700;cursor:pointer}
+select{font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+.cancel{background:none;border:1.5px solid var(--line);color:var(--ink);border-radius:10px;padding:10px;font:inherit;font-weight:600;cursor:pointer}
+.acts{display:flex;flex-direction:column;align-items:flex-end}
+.search{margin-bottom:12px}
+.filters{display:flex;gap:14px;margin:0 0 10px;font-size:.95rem}
+.filters button{background:none;border:0;padding:4px 0;font:inherit;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent}
+.filters button[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+#list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+#list>li{background:var(--surface);border:1.5px solid var(--line);border-radius:6px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+li.done .t{text-decoration:line-through;color:var(--muted)}
+li input[type=checkbox]{width:22px;height:22px;margin-top:2px;accent-color:var(--accent);flex:none}
+.body{flex:1;min-width:0}
+.t{font-family:"Cormorant Garamond",Georgia,serif;font-weight:700;font-size:1.35rem;line-height:1.2;overflow-wrap:anywhere}
+.meta{color:var(--muted);font-size:.9rem}
+.note{margin-top:4px;font-size:.92rem;overflow-wrap:anywhere}
+.badge{display:inline-block;background:var(--hi);color:var(--hi-ink);font-size:.78rem;font-weight:600;border-radius:6px;padding:1px 7px;margin-left:6px}
+.del{background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;padding:4px 6px;border-radius:6px}
+.del:hover{color:var(--ink)}
+#rx{display:grid;gap:10px}
+.rx-body{margin-top:8px}
+.rx-body summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:.92rem}
+.rx-body h3{font-size:.95rem;margin:10px 0 4px}
+.rx-body ul,.rx-body ol{margin:0;padding-left:20px;font-size:.92rem}
+.rx-body ul{list-style:disc}
+.rx-body li{margin-bottom:3px;overflow-wrap:anywhere}
+.empty{color:var(--muted);text-align:center;padding:28px 10px;border:1.5px dashed var(--line);border-radius:12px}
+@media (prefers-reduced-motion:no-preference){#list>li{animation:in .18s ease-out}@keyframes in{from{opacity:0;transform:translateY(4px)}}}
+</style>
+</head>
+<body>
+<main>
+<h1>My Recipes & Books</h1>
+<p class="sub">Save what you want to cook or read, and tick it off when you’re done.</p>
+<div class="tabs" role="group" aria-label="List type">
+<button class="tab" id="tab-recipes" aria-pressed="true">Recipes</button>
+<button class="tab" id="tab-books" aria-pressed="false">Books</button>
+</div>
+<form id="f">
+<label>Title<input id="title" required maxlength="120" placeholder="Add a title"></label>
+<label>Category<input id="cat" maxlength="30" list="cats" placeholder="For example, Dinner or Sci-fi"></label><datalist id="cats"></datalist>
+<label><span id="l-by">Cuisine</span><input id="by" maxlength="80"></label>
+<div id="rx">
+<label>Cooking time<input id="time" maxlength="30" placeholder="For example, 45 min"></label>
+<label>Ingredients<textarea id="ing" maxlength="1000" placeholder="One ingredient per line"></textarea></label>
+<label>Steps<textarea id="steps" maxlength="2000" placeholder="One step per line"></textarea></label>
+</div>
+<label>Notes<textarea id="note" maxlength="300" placeholder="Link, ingredients, why you want it"></textarea></label>
+<button class="add" type="submit" id="addbtn">Add recipe</button>
+<button type="button" class="cancel" id="cancel" hidden>Cancel editing</button>
+</form>
+<input id="q" class="search" type="search" placeholder="Search titles, notes, and ingredients" aria-label="Search this list">
+<select id="catf" class="search" aria-label="Filter by category" hidden></select>
+<div class="filters" role="group" aria-label="Filter">
+<button data-f="all" aria-pressed="true">All</button>
+<button data-f="todo" aria-pressed="false">To do</button>
+<button data-f="done" aria-pressed="false">Done</button>
+</div>
+<ul id="list"></ul>
+</main>
+<script>
+var data={recipes:[],books:[]};
+var type="recipes",filter="all",q="",catSel="",editing=null;
+var $=function(id){return document.getElementById(id)};
+var words={recipes:{by:"Cuisine",add:"Add recipe",done:"Cooked",todo:"to cook",empty:"No recipes yet. Add the first one above."},
+books:{by:"Author",add:"Add book",done:"Read",todo:"to read",empty:"No books yet. Add the first one above."}};
+
+async function fetchData(){
+  try{
+    var res=await fetch('/api/data');
+    if(!res.ok) throw new Error('Fetch failed');
+    var payload=await res.json();
+    if(payload&&Array.isArray(payload.recipes)&&Array.isArray(payload.books)){
+      data=payload;
+    }
+  }catch(e){
+    data={recipes:[],books:[]};
+  }
+}
+
+async function save(){
+  try{
+    var res=await fetch('/api/data',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    if(!res.ok) throw new Error('Save failed');
+    data=await res.json();
+  }catch(e){
+    console.error('Could not save data to JSON file:', e);
+  }
+}
+
+function render(){
+var w=words[type],ul=$("list");
+$("l-by").textContent=w.by;$("addbtn").textContent=editing?"Save changes":w.add;$("rx").style.display=type==="recipes"?"grid":"none";
+var cats=[];data[type].forEach(function(i){if(i.cat&&cats.indexOf(i.cat)<0)cats.push(i.cat);});cats.sort();
+if(catSel&&cats.indexOf(catSel)<0)catSel="";
+$("cats").innerHTML="";cats.forEach(function(c){var o=document.createElement("option");o.value=c;$("cats").appendChild(o);});
+var sel=$("catf");sel.innerHTML="";var o0=document.createElement("option");o0.value="";o0.textContent="All categories";sel.appendChild(o0);cats.forEach(function(c){var o=document.createElement("option");o.value=c;o.textContent=c;sel.appendChild(o);});sel.value=catSel;sel.hidden=!cats.length;
+$("tab-recipes").setAttribute("aria-pressed",type==="recipes");
+$("tab-books").setAttribute("aria-pressed",type==="books");
+document.querySelectorAll(".filters button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.f===filter)});
+ul.innerHTML="";
+var items=data[type].filter(function(i){
+var okF=filter==="all"||(filter==="done")===i.done;
+var okQ=!q||[i.title,i.cat,i.by,i.note,i.time,i.ing,i.steps].join(" ").toLowerCase().indexOf(q)>-1;
+return okF&&okQ&&(!catSel||i.cat===catSel);});
+if(!items.length){var e=document.createElement("div");e.className="empty";e.textContent=data[type].length?"Nothing matches your search or filter.":w.empty;ul.appendChild(e);return;}
+items.forEach(function(i){
+var li=document.createElement("li");if(i.done)li.className="done";
+var cb=document.createElement("input");cb.type="checkbox";cb.checked=i.done;cb.setAttribute("aria-label","Mark as "+w.done.toLowerCase());
+cb.onchange=function(){i.done=cb.checked;save();render();};
+var b=document.createElement("div");b.className="body";
+var t=document.createElement("div");t.className="t";t.textContent=i.title;
+if(i.done){var bd=document.createElement("span");bd.className="badge";bd.textContent=w.done;t.appendChild(bd);}
+b.appendChild(t);
+var mt=[i.cat,i.by,i.time?"Time: "+i.time:""].filter(Boolean).join(", ");if(mt){var m=document.createElement("div");m.className="meta";m.textContent=mt;b.appendChild(m);}
+if(i.note){var n=document.createElement("div");n.className="note";n.textContent=i.note;b.appendChild(n);}
+if(type==="recipes"&&(i.ing||i.steps)){
+var dt=document.createElement("details");dt.className="rx-body";
+var sm=document.createElement("summary");sm.textContent="Ingredients and steps";dt.appendChild(sm);
+if(i.ing){var h=document.createElement("h3");h.textContent="Ingredients";dt.appendChild(h);var u=document.createElement("ul");i.ing.split("\n").filter(function(x){return x.trim()}).forEach(function(x){var l=document.createElement("li");l.textContent=x;u.appendChild(l);});dt.appendChild(u);}
+if(i.steps){var h2=document.createElement("h3");h2.textContent="Steps";dt.appendChild(h2);var o=document.createElement("ol");i.steps.split("\n").filter(function(x){return x.trim()}).forEach(function(x){var l=document.createElement("li");l.textContent=x;o.appendChild(l);});dt.appendChild(o);}
+b.appendChild(dt);}
+var d=document.createElement("button");d.className="del";d.textContent="Delete";d.setAttribute("aria-label","Delete "+i.title);
+d.onclick=function(){data[type]=data[type].filter(function(x){return x!==i});if(editing===i)stopEdit();save();render();};
+var ed=document.createElement("button");ed.className="del";ed.textContent="Edit";ed.setAttribute("aria-label","Edit "+i.title);ed.onclick=function(){startEdit(i);};
+var ac=document.createElement("div");ac.className="acts";ac.appendChild(ed);ac.appendChild(d);
+li.appendChild(cb);li.appendChild(b);li.appendChild(ac);ul.appendChild(li);
+});
+}
+$("f").onsubmit=function(ev){
+ev.preventDefault();
+var title=$("title").value.trim();if(!title)return;
+var item=editing||{done:false};item.title=title;item.by=$("by").value.trim();item.cat=$("cat").value.trim();item.note=$("note").value.trim();
+if(type==="recipes"){item.time=$("time").value.trim();item.ing=$("ing").value.trim();item.steps=$("steps").value.trim();}
+if(!editing)data[type].unshift(item);
+stopEdit();save();render();$("title").focus();
+};
+$("tab-recipes").onclick=function(){type="recipes";stopEdit();render();};
+$("tab-books").onclick=function(){type="books";stopEdit();render();};
+document.querySelectorAll(".filters button").forEach(function(b){b.onclick=function(){filter=b.dataset.f;render();};});
+$("q").oninput=function(){q=this.value.trim().toLowerCase();render();};
+$("catf").onchange=function(){catSel=this.value;render();};
+$("cancel").onclick=function(){stopEdit();render();};
+function stopEdit(){editing=null;$("f").reset();$("cancel").hidden=true;}
+function startEdit(i){editing=i;$("title").value=i.title||"";$("cat").value=i.cat||"";$("by").value=i.by||"";$("note").value=i.note||"";$("time").value=i.time||"";$("ing").value=i.ing||"";$("steps").value=i.steps||"";$("cancel").hidden=false;render();$("f").scrollIntoView();$("title").focus();}
+fetchData().then(render);
+</script>
+</body>
+</html>
