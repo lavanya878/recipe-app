@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/data", "dest": "/api/data.js" },
+    { "src": "/", "dest": "/My%20Recipes%20%26%20Books.html" },
+    { "src": "/My%20Recipes%20%26%20Books.html", "dest": "/My%20Recipes%20%26%20Books.html" },
+    { "src": "/My%20Recipes%20%26%20Books.md", "dest": "/My%20Recipes%20%26%20Books.md" }
+  ]
+}

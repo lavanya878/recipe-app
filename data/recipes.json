@@ -1,36 +1,6 @@
 {
   "recipes": [
     {
-      "done": false,
-      "title": "Parota salna  1",
-      "by": "indian",
-      "cat": "dinner",
-      "note": "spicy",
-      "time": "20mins",
-      "ing": "Onion\ntomato\nginger garlic paste\ntumeric powder\nred chilli powder\nspices\ncoconut\ncashew\n\nsalt",
-      "steps": "Add the spices in the oil\nsaute onion\nadd ginger garlic paste\nadd tomato\nadd masala powders\nadd coconut paste"
-    },
-    {
-      "done": false,
-      "title": "Ada Dosa",
-      "by": "Indian",
-      "cat": "Breakfast",
-      "note": "protein rich",
-      "time": "15mins",
-      "ing": "Toor dal\nChanna dal\nMoong dal\nUrid dal\nRice\nRed chillies\nJeera\nAsfoedia\nSalt",
-      "steps": "Wash and soak all the dals along with rice\nGrind coarsely\nwithout fermentation pour on dosa pan"
-    },
-    {
-      "done": false,
-      "title": "malwurfkuchen",
-      "by": "",
-      "cat": "",
-      "note": "",
-      "time": "1",
-      "ing": "",
-      "steps": ""
-    },
-    {
       "title": "Pasta",
       "category": "Dinner",
       "done": false
