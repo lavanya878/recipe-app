@@ -2,6 +2,16 @@
   "recipes": [
     {
       "done": false,
+      "title": "Parota salna",
+      "by": "indian",
+      "cat": "dinner",
+      "note": "spicy",
+      "time": "20mins",
+      "ing": "Onion\ntomato\nginger garlic paste\ntumeric powder\nred chilli powder\nspices\ncoconut\ncashew\n\nsalt",
+      "steps": "Add the spices in the oil\nsaute onion\nadd ginger garlic paste\nadd tomato\nadd masala powders\nadd coconut paste"
+    },
+    {
+      "done": false,
       "title": "Ada Dosa",
       "by": "Indian",
       "cat": "Breakfast",
